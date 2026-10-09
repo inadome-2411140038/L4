@@ -11,11 +11,18 @@ class TopController < ApplicationController
     uid = params[:uid]
     pass = params[:pass]
 
-    if uid == "kindai" && pass == "sanriko"
+    user = User.find_by(uid: uid, pass: pass)
+
+    if user != nil
       session[:login_uid] = uid
       redirect_to top_main_path
     else
       render :error
     end
+  end
+
+  def logout
+    session.delete(:login_uid)
+    redirect_to top_main_path
   end
 end
