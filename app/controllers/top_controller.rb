@@ -11,9 +11,9 @@ class TopController < ApplicationController
     uid = params[:uid]
     pass = params[:pass]
 
-    user = User.find_by(uid: uid, pass: pass)
+    user = User.find_by(uid: uid)
 
-    if user != nil
+    if user != nil && BCrypt::Password.new(user.pass) == pass
       session[:login_uid] = uid
       redirect_to top_main_path
     else
